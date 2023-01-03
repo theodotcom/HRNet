@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { Form } from '../components/Form'
 
 const Index = () => {
     return (
@@ -12,6 +13,7 @@ const Index = () => {
                 </Link>
                 <h2>Create Employee</h2>
             </div>
+            <Form />
         </div>
     )
 }
