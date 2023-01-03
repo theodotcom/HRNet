@@ -4,7 +4,7 @@ import { Form } from '../components/Form'
 const Index = () => {
     return (
         <div className="body_container">
-            <div class="title">
+            <div className="title">
                 <h1>HRnet</h1>
             </div>
             <div className="main_infos">
