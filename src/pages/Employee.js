@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux'
+import { useContext } from 'react'
 
 function EmployeesList() {
     const employees = useSelector((state) => state.employees)
@@ -9,9 +10,8 @@ function EmployeesList() {
                 <li>
                     <h3>
                         {employee.firstName} {employee.lastName}
+                        {employee.startDate}
                     </h3>
-                    <p>Date of Birth: {employee.dateOfBirth}</p>
-                    <p>Start Date: {employee.startDate}</p>
                     <p>
                         Address: {employee.street}, {employee.city},{' '}
                         {employee.state}, {employee.zipCode}

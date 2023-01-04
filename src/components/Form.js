@@ -1,137 +1,144 @@
 import '../css/form.css'
 import { useState } from 'react'
-import { useForm, Controller } from 'react-hook-form'
 import ReactDatePicker from 'react-datepicker'
 import BasicModal from './ModalValidation'
 import { useDispatch } from 'react-redux'
 import { addEmployee } from '../redux/reducer'
 import 'react-datepicker/dist/react-datepicker.css'
 
+import Select from './Select'
+
 export function Form() {
-    const { register, handleSubmit, control } = useForm()
+    const departments = [
+        { label: 'Sales', value: 'Sales' },
+        { label: 'Marketing', value: 'Marketing' },
+        { label: 'Engineering', value: 'Engineering' },
+        { label: 'Human Resources', value: 'Human Resources' },
+        { label: 'Legal', value: 'Legal' },
+    ]
+
+    const states = [
+        { label: 'Alabama', value: 'AL' },
+        { label: 'Alabama2', value: 'AL2' },
+    ]
 
     const dispatch = useDispatch()
 
-    const onSubmit = (data) => {
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [startDate, setStartDate] = useState(undefined)
+    const [street, setStreet] = useState('')
+    const [city, setCity] = useState('')
+    const [zipCode, setZipCode] = useState('')
+
+    const [dateOfBirth, setDateOfBirth] = useState(undefined)
+    const [department, setDepartment] = useState('Engineering')
+    const [state, setState] = useState('AL2')
+
+    const onSubmiting = (e) => {
+        e.preventDefault()
         const employee = {
-            firstName: data.firstName,
-            lastName: data.lastName,
-            dateOfBirth: data.dateOfBirth,
-            startDate: data.startDate,
-            street: data.street,
-            city: data.city,
-            state: data.state,
-            zipCode: data.zipCode,
-            department: data.department,
+            firstName,
+            lastName,
+            dateOfBirth: dateOfBirth.toDateString(),
+            startDate: startDate.toDateString(),
+            street,
+            city,
+            state,
+            zipCode,
+            department,
         }
+        console.log(employee)
         dispatch(addEmployee(employee))
     }
 
     return (
         <div className="containertmr">
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form
+                onSubmit={(e) => {
+                    onSubmiting(e)
+                }}
+            >
                 <div className="main_container">
                     <div className="left_container">
                         <section className="topForm_container">
                             <input
                                 type="text"
-                                {...register('firstName')}
+                                value={firstName}
+                                onChange={(e) => setFirstName(e.target.value)}
                                 placeholder="First name"
                             />
                             <input
                                 type="text"
-                                {...register('lastName')}
+                                value={lastName}
+                                onChange={(e) => setLastName(e.target.value)}
                                 placeholder="Last name"
                             />
 
                             <div className="date_container">
-                                <Controller
-                                    control={control}
-                                    name="Date of Birth"
-                                    render={({ field }) => (
-                                        <ReactDatePicker
-                                            {...register('dateOfBirth', {
-                                                valueAsDate: true,
-                                            })}
-                                            placeholderText="Date of Birth"
-                                            selected={field.value}
-                                            onChange={(date) =>
-                                                field.onChange(date)
-                                            }
-                                            dateFormat="dd/MM/yyyy"
-                                        />
-                                    )}
+                                <ReactDatePicker
+                                    selected={dateOfBirth}
+                                    placeholderText="Date of Birth"
+                                    onChange={(date) => setDateOfBirth(date)}
                                 />
                             </div>
                             <div className="startDate_container">
-                                <Controller
-                                    control={control}
-                                    name="Start Date"
-                                    render={({ field }) => (
-                                        <ReactDatePicker
-                                            {...register('startDate')}
-                                            placeholderText="Start Date"
-                                            selected={field.value}
-                                            type="date"
-                                            dateFormat="dd/MM/yyyy"
-                                            onChange={(date) =>
-                                                field.onChange(date)
-                                            }
-                                        />
-                                    )}
+                                <ReactDatePicker
+                                    selected={startDate}
+                                    placeholderText="Start Date"
+                                    onChange={(date) => setStartDate(date)}
                                 />
                             </div>
                         </section>
                         <section className="department_container">
-                            <label for="department">Department</label>
-                            <select
-                                name="department"
-                                {...register('department', { required: true })}
-                            >
-                                <option>Sales</option>
-                                <option>Marketing</option>
-                                <option>Engineering</option>
-                                <option>Human Resources</option>
-                                <option>Legal</option>
-                            </select>
+                            <label htmlFor="department">Department</label>
+                            <Select
+                                items={departments}
+                                onChange={(department) =>
+                                    setDepartment(department)
+                                }
+                                selected={department}
+                            />
                         </section>
                     </div>
                     <div className="right_container">
                         {' '}
-                        <section class="address_container">
+                        <section className="address_container">
                             <legend>Address</legend>
 
-                            <label for="street">Street</label>
+                            <label htmlFor="street">Street</label>
                             <input
                                 id="street"
-                                {...register('sreet')}
+                                value={street}
+                                onChange={(e) => setStreet(e.target.value)}
                                 type="text"
                             />
 
-                            <label for="city">City</label>
+                            <label htmlFor="city">City</label>
                             <input
-                                {...register('city')}
+                                value={city}
+                                onChange={(e) => setCity(e.target.value)}
                                 id="city"
                                 type="text"
                             />
 
-                            <label for="state">State</label>
-                            <select
-                                {...register('state')}
-                                name="state"
-                                id="state"
-                            ></select>
+                            <label htmlFor="state">State</label>
+                            <Select
+                                items={states}
+                                onChange={(state) => setState(state)}
+                                selected={state}
+                            />
 
-                            <label for="zip-code">Zip Code</label>
+                            <label htmlFor="zip-code">Zip Code</label>
                             <input
-                                {...register('zipCode')}
+                                value={zipCode}
+                                onChange={(e) => setZipCode(e.target.value)}
                                 id="zip-code"
                                 type="number"
                             />
                         </section>
                     </div>
                 </div>
-
                 <BasicModal />
             </form>
         </div>

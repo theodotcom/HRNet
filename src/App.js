@@ -2,7 +2,7 @@ import './App.css'
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Index from './pages/Index'
-import EmployeesList from './pages/Employee'
+import Employee from './pages/Employee'
 
 function App() {
     return (
@@ -13,7 +13,7 @@ function App() {
                     <Route
                         exact
                         path="/employee"
-                        element={<EmployeesList />}
+                        element={<Employee />}
                     ></Route>
                 </Routes>
             </Router>
