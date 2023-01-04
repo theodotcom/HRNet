@@ -2,29 +2,27 @@ import { useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import ReactDatePicker from 'react-datepicker'
 import BasicModal from './ModalValidation'
-import { useSelector, useDispatch } from 'react-redux'
-import { updateForm } from '../redux/reducer'
+import { useDispatch } from 'react-redux'
+import { addEmployee } from '../redux/reducer'
 
 export function Form() {
     const { register, handleSubmit, control } = useForm()
     const [data, setData] = useState('')
-    const formState = useSelector((state) => state.form)
     const dispatch = useDispatch()
 
     const onSubmit = (data) => {
-        dispatch(updateForm({ field: 'firstName', value: data.firstName }))
-        dispatch(updateForm({ field: 'lastName', value: data.lastName }))
-        dispatch(updateForm({ field: 'dateOfBirth', value: data.dateOfBirth }))
-        dispatch(updateForm({ field: 'startDate', value: data.startDate }))
-        dispatch(updateForm({ field: 'street', value: data.street }))
-        dispatch(updateForm({ field: 'city', value: data.city }))
-        dispatch(updateForm({ field: 'state', value: data.state }))
-        dispatch(updateForm({ field: 'zipCode', value: data.zipCode }))
-        dispatch(updateForm({ field: 'department', value: data.department }))
-    }
-
-    const onChange = (e) => {
-        dispatch(updateForm({ field: e.target.name, value: e.target.value }))
+        const employee = {
+            firstName: data.firstName,
+            lastName: data.lastName,
+            dateOfBirth: data.dateOfBirth,
+            startDate: data.startDate,
+            street: data.street,
+            city: data.city,
+            state: data.state,
+            zipCode: data.zipCode,
+            department: data.department,
+        }
+        dispatch(addEmployee(employee))
     }
 
     return (
@@ -34,13 +32,11 @@ export function Form() {
                     type="text"
                     {...register('firstName')}
                     placeholder="First name"
-                    onChange={onChange}
                 />
                 <input
                     type="text"
                     {...register('lastName')}
                     placeholder="Last name"
-                    onChange={onChange}
                 />
 
                 <section className="date_container">
@@ -54,7 +50,6 @@ export function Form() {
                                 selected={field.value}
                                 type="date"
                                 dateFormat="dd/MM/yyyy"
-                                onChange={onChange}
                             />
                         )}
                     />
@@ -71,7 +66,6 @@ export function Form() {
                                 type="date"
                                 dateFormat="dd/MM/yyyy"
                                 todayButton="Today"
-                                onChange={onChange}
                             />
                         )}
                     />
@@ -81,27 +75,16 @@ export function Form() {
                     <legend>Address</legend>
 
                     <label for="street">Street</label>
-                    <input
-                        id="street"
-                        {...register('sreet')}
-                        type="text"
-                        onChange={onChange}
-                    />
+                    <input id="street" {...register('sreet')} type="text" />
 
                     <label for="city">City</label>
-                    <input
-                        {...register('city')}
-                        id="city"
-                        type="text"
-                        onChange={onChange}
-                    />
+                    <input {...register('city')} id="city" type="text" />
 
                     <label for="state">State</label>
                     <select
                         {...register('state')}
                         name="state"
                         id="state"
-                        onChange={onChange}
                     ></select>
 
                     <label for="zip-code">Zip Code</label>
@@ -109,7 +92,6 @@ export function Form() {
                         {...register('zipCode')}
                         id="zip-code"
                         type="number"
-                        onChange={onChange}
                     />
                 </section>
 
@@ -117,7 +99,6 @@ export function Form() {
                 <select
                     name="department"
                     {...register('department', { required: true })}
-                    onChange={onChange}
                 >
                     <option>Sales</option>
                     <option>Marketing</option>

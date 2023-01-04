@@ -1,19 +1,25 @@
-import { Link } from 'react-router-dom'
-import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { useStore } from 'react-redux'
 
-const Employee = () => {
-    const store = useStore()
-    const state = useSelector((state) => state)
+function EmployeesList() {
+    const employees = useSelector((state) => state.employees)
+
     return (
-        <div className="body">
-            <Link className="main-nav" to="/">
-                <h1 className="sr-only">Home</h1>
-            </Link>
-            <h1>Current Employees {state.firstName}</h1>
-        </div>
+        <ul>
+            {employees.map((employee) => (
+                <li>
+                    <h3>
+                        {employee.firstName} {employee.lastName}
+                    </h3>
+                    <p>Date of Birth: {employee.dateOfBirth}</p>
+                    <p>Start Date: {employee.startDate}</p>
+                    <p>
+                        Address: {employee.street}, {employee.city},{' '}
+                        {employee.state}, {employee.zipCode}
+                    </p>
+                    <p>Department: {employee.department}</p>
+                </li>
+            ))}
+        </ul>
     )
 }
-
-export default Employee
+export default EmployeesList

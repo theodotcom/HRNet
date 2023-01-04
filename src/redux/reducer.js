@@ -3,22 +3,14 @@ import { createSlice } from '@reduxjs/toolkit'
 export const formSlice = createSlice({
     name: 'form',
     initialState: {
-        firstName: '',
-        lastName: '',
-        dateOfBirth: '',
-        startDate: '',
-        street: '',
-        city: '',
-        state: '',
-        zipCode: '',
-        department: '',
+        employees: [],
     },
     reducers: {
-        updateForm: (state, action) => {
-            state[action.payload.field] = action.payload.value
+        addEmployee: (state, action) => {
+            state.employees.push(action.payload)
         },
     },
 })
 
-export const { updateForm } = formSlice.actions
+export const { addEmployee } = formSlice.actions
 export default formSlice.reducer
