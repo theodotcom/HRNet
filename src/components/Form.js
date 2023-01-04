@@ -1,9 +1,11 @@
+import '../css/form.css'
 import { useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import ReactDatePicker from 'react-datepicker'
 import BasicModal from './ModalValidation'
 import { useDispatch } from 'react-redux'
 import { addEmployee } from '../redux/reducer'
+import 'react-datepicker/dist/react-datepicker.css'
 
 export function Form() {
     const { register, handleSubmit, control } = useForm()
@@ -28,50 +30,51 @@ export function Form() {
     return (
         <div className="containertmr">
             <form onSubmit={handleSubmit(onSubmit)}>
-                <input
-                    type="text"
-                    {...register('firstName')}
-                    placeholder="First name"
-                />
-                <input
-                    type="text"
-                    {...register('lastName')}
-                    placeholder="Last name"
-                />
-
-                <section className="date_container">
-                    <Controller
-                        control={control}
-                        name="Date of Birth"
-                        render={({ field }) => (
-                            <ReactDatePicker
-                                {...register('dateOfBirth')}
-                                placeholderText="Date of Birth"
-                                selected={field.value}
-                                type="date"
-                                dateFormat="dd/MM/yyyy"
-                            />
-                        )}
+                <section className="topForm_container">
+                    <input
+                        type="text"
+                        {...register('firstName')}
+                        placeholder="First name"
                     />
-                </section>
-                <section className="startDate_container">
-                    <Controller
-                        control={control}
-                        name="Start Date"
-                        render={({ field }) => (
-                            <ReactDatePicker
-                                {...register('startDate')}
-                                placeholderText="Start Date"
-                                selected={field.value}
-                                type="date"
-                                dateFormat="dd/MM/yyyy"
-                                todayButton="Today"
-                            />
-                        )}
+                    <input
+                        type="text"
+                        {...register('lastName')}
+                        placeholder="Last name"
                     />
-                </section>
 
-                <section class="address">
+                    <div className="date_container">
+                        <Controller
+                            control={control}
+                            name="Date of Birth"
+                            render={({ field }) => (
+                                <ReactDatePicker
+                                    {...register('dateOfBirth')}
+                                    placeholderText="Date of Birth"
+                                    selected={field.value}
+                                    type="date"
+                                    dateFormat="dd/MM/yyyy"
+                                />
+                            )}
+                        />
+                    </div>
+                    <div className="startDate_container">
+                        <Controller
+                            control={control}
+                            name="Start Date"
+                            render={({ field }) => (
+                                <ReactDatePicker
+                                    {...register('startDate')}
+                                    placeholderText="Start Date"
+                                    selected={field.value}
+                                    type="date"
+                                    dateFormat="dd/MM/yyyy"
+                                    todayButton="Today"
+                                />
+                            )}
+                        />
+                    </div>
+                </section>
+                <section class="address_container">
                     <legend>Address</legend>
 
                     <label for="street">Street</label>
@@ -94,18 +97,19 @@ export function Form() {
                         type="number"
                     />
                 </section>
-
-                <label for="department">Department</label>
-                <select
-                    name="department"
-                    {...register('department', { required: true })}
-                >
-                    <option>Sales</option>
-                    <option>Marketing</option>
-                    <option>Engineering</option>
-                    <option>Human Resources</option>
-                    <option>Legal</option>
-                </select>
+                <section className="department_container">
+                    <label for="department">Department</label>
+                    <select
+                        name="department"
+                        {...register('department', { required: true })}
+                    >
+                        <option>Sales</option>
+                        <option>Marketing</option>
+                        <option>Engineering</option>
+                        <option>Human Resources</option>
+                        <option>Legal</option>
+                    </select>
+                </section>
 
                 <p>{data}</p>
 
