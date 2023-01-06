@@ -1,0 +1,15 @@
+a {
+    text-decoration: none;
+}
+
+body{
+    margin: 0;
+}
+
+.title{
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+    width: 620px;
+}
