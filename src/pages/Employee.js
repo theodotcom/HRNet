@@ -1,75 +1,42 @@
 import { useSelector } from 'react-redux'
-import DataTable from 'react-data-table-component'
+import { DataGrid, GridToolbar } from '@mui/x-data-grid'
 
 function EmployeesList() {
     const employees = useSelector((state) => state.employees)
+    const rows = employees.map((employee, index) => ({
+        ...employee,
+        id: index,
+    }))
     const columns = [
-        {
-            name: 'First Name',
-            selector: (row) => row.firstName,
-            sortable: true,
-            filterable: true,
-        },
-        {
-            name: 'Last Name',
-            selector: (row) => row.lastName,
-            sortable: true,
-            filterable: true,
-        },
-        {
-            name: 'Date Of Birth',
-            selector: (row) => row.dateOfBirth,
-            sortable: true,
-            filterable: true,
-        },
-        {
-            name: 'Start Date',
-            selector: (row) => row.startDate,
-            sortable: true,
-            filterable: true,
-        },
-        {
-            name: 'Department',
-            selector: (row) => row.department,
-            sortable: true,
-            filterable: true,
-        },
-        {
-            name: 'Street',
-            selector: (row) => row.street,
-            sortable: true,
-            filterable: true,
-        },
-        {
-            name: 'State',
-            selector: (row) => row.state,
-            sortable: true,
-            filterable: true,
-        },
-        {
-            name: 'City',
-            selector: (row) => row.city,
-            sortable: true,
-            filterable: true,
-        },
-        {
-            name: 'Zip Code',
-            selector: (row) => row.zipCode,
-            sortable: true,
-            filterable: true,
-        },
+        { field: 'firstName', headerName: 'First Name', width: 150 },
+        { field: 'lastName', headerName: 'Last Name', width: 150 },
+        { field: 'dateOfBirth', headerName: 'Date Of Birth', width: 150 },
+        { field: 'startDate', headerName: 'Start Date', width: 150 },
+        { field: 'department', headerName: 'Department', width: 150 },
+        { field: 'street', headerName: 'Street', width: 150 },
+        { field: 'state', headerName: 'State', width: 150 },
+        { field: 'city', headerName: 'City', width: 150 },
+        { field: 'zipCode', headerName: 'Zip Code', width: 150 },
     ]
 
     return (
-        <DataTable
-            title="Current Employees"
-            columns={columns}
-            data={employees}
-            pagination
-            highlightOnHover
-            responsive
-            defaultSortFieldId={1}
-        />
+        <div style={{ display: 'flex', height: 350 }}>
+            <div style={{ flexGrow: 1 }}>
+                <DataGrid
+                    title="Current Employees"
+                    columns={columns}
+                    rows={rows}
+                    pagination
+                    components={{ Toolbar: GridToolbar }}
+                    componentsProps={{
+                        toolbar: {
+                            showQuickFilter: true,
+                            quickFilterProps: { debounceMs: 500 },
+                        },
+                    }}
+                />
+            </div>
+        </div>
     )
 }
 export default EmployeesList
