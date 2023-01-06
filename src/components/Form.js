@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import { addEmployee } from '../redux/reducer'
 import 'react-datepicker/dist/react-datepicker.css'
 import { states } from '../utils/states'
-import Select from './Select'
+import { Select } from 'my-react-select'
 
 export function Form() {
     const departments = [
