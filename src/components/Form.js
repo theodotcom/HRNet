@@ -5,7 +5,7 @@ import BasicModal from './ModalValidation'
 import { useDispatch } from 'react-redux'
 import { addEmployee } from '../redux/reducer'
 import 'react-datepicker/dist/react-datepicker.css'
-
+import { states } from '../utils/states'
 import Select from './Select'
 
 export function Form() {
@@ -15,11 +15,6 @@ export function Form() {
         { label: 'Engineering', value: 'Engineering' },
         { label: 'Human Resources', value: 'Human Resources' },
         { label: 'Legal', value: 'Legal' },
-    ]
-
-    const states = [
-        { label: 'Alabama', value: 'AL' },
-        { label: 'Alabama2', value: 'AL2' },
     ]
 
     const dispatch = useDispatch()
@@ -54,7 +49,9 @@ export function Form() {
 
     return (
         <div className="containertmr">
+            <h2>Create Employee</h2>
             <form
+                className="form_container"
                 onSubmit={(e) => {
                     onSubmiting(e)
                 }}
@@ -62,30 +59,32 @@ export function Form() {
                 <div className="main_container">
                     <div className="left_container">
                         <section className="topForm_container">
+                            <label htmlFor="firstName">First Name</label>
                             <input
                                 type="text"
                                 value={firstName}
                                 onChange={(e) => setFirstName(e.target.value)}
-                                placeholder="First name"
                             />
+                            <label htmlFor="lastName">Last Name</label>
                             <input
                                 type="text"
                                 value={lastName}
                                 onChange={(e) => setLastName(e.target.value)}
-                                placeholder="Last name"
                             />
 
                             <div className="date_container">
+                                <label htmlFor="dateOfBirth">
+                                    Date Of Birth
+                                </label>
                                 <ReactDatePicker
                                     selected={dateOfBirth}
-                                    placeholderText="Date of Birth"
                                     onChange={(date) => setDateOfBirth(date)}
                                 />
                             </div>
                             <div className="startDate_container">
+                                <label htmlFor="startdate">Start Date</label>
                                 <ReactDatePicker
                                     selected={startDate}
-                                    placeholderText="Start Date"
                                     onChange={(date) => setStartDate(date)}
                                 />
                             </div>
@@ -103,7 +102,7 @@ export function Form() {
                     </div>
                     <div className="right_container">
                         {' '}
-                        <section className="address_container">
+                        <fieldset className="address_container">
                             <legend>Address</legend>
 
                             <label htmlFor="street">Street</label>
@@ -136,7 +135,7 @@ export function Form() {
                                 id="zip-code"
                                 type="number"
                             />
-                        </section>
+                        </fieldset>
                     </div>
                 </div>
                 <BasicModal />
