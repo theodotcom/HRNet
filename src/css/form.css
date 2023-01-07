@@ -62,6 +62,23 @@ select{
     height: 33px;
 }
 
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 15px;
+    transition: background-color 0.2s;
+    color: #fff;
+    background-color: #3498db;
+    border: none;
+    font-size: 19px;
+    cursor: pointer;
+  }
+  
+  .btn:hover {
+    background-color: #2980b9;
+  }
+  
+
 /* Style de la modale */
 .modal {
     display: none; /* Cache la modale par défaut */
@@ -81,7 +98,7 @@ select{
     margin: 15% auto; /* Centre la modale horizontalement */
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Largeur du contenu de la modale */
+    width: 46%; /* Largeur du contenu de la modale */
   }
   
   /* Style du bouton de fermeture */

@@ -1,43 +1,36 @@
 import '../css/form.css'
+import 'react-datepicker/dist/react-datepicker.css'
 import { useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
 import { useDispatch } from 'react-redux'
 import { addEmployee } from '../redux/reducer'
-import 'react-datepicker/dist/react-datepicker.css'
 import { states } from '../utils/states'
+import { departments } from '../utils/departments'
 import { Select } from './Select.js'
-export function Form() {
-    const departments = [
-        { label: 'Sales', value: 'Sales' },
-        { label: 'Marketing', value: 'Marketing' },
-        { label: 'Engineering', value: 'Engineering' },
-        { label: 'Human Resources', value: 'Human Resources' },
-        { label: 'Legal', value: 'Legal' },
-    ]
 
+export function Form() {
     const dispatch = useDispatch()
 
+    //All states necessaries to gathered infos from the form
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [startDate, setStartDate] = useState(undefined)
     const [street, setStreet] = useState('')
     const [city, setCity] = useState('')
     const [zipCode, setZipCode] = useState('')
-
     const [dateOfBirth, setDateOfBirth] = useState(undefined)
     const [department, setDepartment] = useState('Engineering')
     const [state, setState] = useState('AL')
 
     const onSubmiting = (e) => {
         e.preventDefault()
-
-        // Vérifiez que les champs sont bien remplis
-
         submitForm()
     }
-
+    //function to check if all conditions are required
+    //before sending forms data to the redux store
     const submitForm = () => {
-        // Vérifiez que les champs sont bien remplis
+        //More conditions could be added if needed
+        //but client side server validation is kind of useless
         if (
             !firstName ||
             !lastName ||
@@ -49,8 +42,7 @@ export function Form() {
         ) {
             return
         }
-
-        // Préparez les données du formulaire à envoyer à l'API ou à ajouter au state
+        //Create my set of datas
         const employee = {
             firstName,
             lastName,
@@ -62,17 +54,20 @@ export function Form() {
             zipCode,
             department,
         }
-        console.log(employee)
+        //if all conditions are Ok, dispatch data to the store
         dispatch(addEmployee(employee))
 
-        // Récupérez les éléments HTML de la modale
+        //Modal classic stuff
         const modal = document.getElementById('myModal')
         const span = document.getElementsByClassName('close')[0]
-
-        // Affiche la modale
         modal.style.display = 'block'
         span.onclick = () => {
             modal.style.display = 'none'
+        }
+        window.onclick = (event) => {
+            if (event.target === modal) {
+                modal.style.display = 'none'
+            }
         }
     }
 
@@ -177,7 +172,7 @@ export function Form() {
                     </div>
                 </div>
                 <button id="myBtn" type="submit" className="btn">
-                    envoyer
+                    Envoyer
                 </button>
 
                 <div id="myModal" className="modal">
