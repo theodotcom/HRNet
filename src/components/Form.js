@@ -6,7 +6,8 @@ import { useDispatch } from 'react-redux'
 import { addEmployee } from '../redux/reducer'
 import { states } from '../utils/states'
 import { departments } from '../utils/departments'
-import { Select } from './Select.js'
+import { Select } from './Select'
+import { Modal } from './Modal.js'
 
 export function Form() {
     const dispatch = useDispatch()
@@ -21,7 +22,7 @@ export function Form() {
     const [dateOfBirth, setDateOfBirth] = useState(undefined)
     const [department, setDepartment] = useState('Engineering')
     const [state, setState] = useState('AL')
-
+    const [isModalOpen, setIsModalOpen] = useState(false)
     const onSubmiting = (e) => {
         e.preventDefault()
         submitForm()
@@ -56,21 +57,11 @@ export function Form() {
         }
         //if all conditions are Ok, dispatch data to the store
         dispatch(addEmployee(employee))
-
-        //Modal classic stuff
-        const modal = document.getElementById('myModal')
-        const span = document.getElementsByClassName('close')[0]
-        modal.style.display = 'block'
-        span.onclick = () => {
-            modal.style.display = 'none'
-        }
-        window.onclick = (event) => {
-            if (event.target === modal) {
-                modal.style.display = 'none'
-            }
-        }
+        setIsModalOpen(true)
     }
-
+    const closeModal = () => {
+        setIsModalOpen(false)
+    }
     return (
         <div className="containertmr">
             <h2>Create Employee</h2>
@@ -174,13 +165,7 @@ export function Form() {
                 <button id="myBtn" type="submit" className="btn">
                     Envoyer
                 </button>
-
-                <div id="myModal" className="modal">
-                    <div className="modal-content">
-                        <span className="close">&times;</span>
-                        <p>Merci pour la creation de votre profil &#129299;</p>
-                    </div>
-                </div>
+                <Modal isOpen={isModalOpen} onClose={closeModal} />
             </form>
         </div>
     )

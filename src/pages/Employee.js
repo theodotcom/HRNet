@@ -1,8 +1,8 @@
 import '../css/employee.css'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { DataGrid, GridToolbar } from '@mui/x-data-grid'
 import { columns } from '../utils/gridColumns'
+import { EmployeeDataGrid } from '../components/DataGrid'
 
 function EmployeesList() {
     const employees = useSelector((state) => state.employees)
@@ -21,19 +21,7 @@ function EmployeesList() {
                 </Link>
             </div>
             <div style={{ flexGrow: 1 }}>
-                <DataGrid
-                    title="Current Employees"
-                    columns={columns}
-                    rows={rows}
-                    pagination
-                    components={{ Toolbar: GridToolbar }}
-                    componentsProps={{
-                        toolbar: {
-                            showQuickFilter: true,
-                            quickFilterProps: { debounceMs: 500 },
-                        },
-                    }}
-                />
+                <EmployeeDataGrid columns={columns} rows={rows} />
             </div>
         </div>
     )
