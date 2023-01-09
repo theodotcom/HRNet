@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import { addEmployee } from '../redux/reducer'
 import { states } from '../utils/states'
 import { departments } from '../utils/departments'
-import { Select } from './Select'
+import { Select } from 'my-react-select'
 import { Modal } from './Modal.js'
 
 export function Form() {
