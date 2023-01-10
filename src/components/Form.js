@@ -8,10 +8,12 @@ import { states } from '../utils/states'
 import { departments } from '../utils/departments'
 import { Select } from 'my-react-select'
 import { Modal } from './Modal.js'
+import ErrorModal from './ErrorModal'
 
 export function Form() {
     const dispatch = useDispatch()
-
+    const [errorMessage, setErrorMessage] = useState('')
+    const [isErrorModalOpen, setIsErrorModalOpen] = useState(false)
     //All states necessaries to gathered infos from the form
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
@@ -32,17 +34,34 @@ export function Form() {
     const submitForm = () => {
         //More conditions could be added if needed
         //but client side server validation is kind of useless
-        if (
-            !firstName ||
-            !lastName ||
-            !city ||
-            !zipCode ||
-            !dateOfBirth ||
-            !startDate ||
-            !street
-        ) {
+        const nameRegex = /^[a-zA-Z]+$/
+        if (!firstName.match(nameRegex) || !lastName.match(nameRegex)) {
+            setErrorMessage('Error: firstName and lastName must be letters')
+            setIsErrorModalOpen(true)
             return
         }
+        const today = new Date()
+        if (dateOfBirth.getTime() >= today.getTime()) {
+            setErrorMessage('Error: dateOfBirth must be before today')
+            setIsErrorModalOpen(true)
+            return
+        }
+        if (!city) {
+            return
+        }
+
+        if (!zipCode) {
+            return
+        }
+
+        if (!startDate) {
+            return
+        }
+
+        if (!street) {
+            return
+        }
+
         //Create my set of datas
         const employee = {
             firstName,
@@ -167,6 +186,14 @@ export function Form() {
                 </button>
                 <Modal isOpen={isModalOpen} onClose={closeModal} />
             </form>
+            <div>
+                {/* ... */}
+                <ErrorModal
+                    isOpen={isErrorModalOpen}
+                    message={errorMessage}
+                    onClose={() => setIsErrorModalOpen(false)}
+                />
+            </div>
         </div>
     )
 }
